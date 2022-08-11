@@ -35,8 +35,15 @@ class User
 
     }
 
-    public function list(): void
+    public function list(): array
     {
-
+        try {
+            $statement = $this->connection->prepare("SELECT * FROM `users`");
+            $statement->execute();
+            $result = $statement->fetchAll();        
+            return $result;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 }

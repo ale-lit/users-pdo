@@ -2,6 +2,19 @@
 
 include_once './User.php';
 
+if (isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['age']) && isset($_POST['email'])) {
+    $data = [
+        'first_name' => htmlentities($_POST['first_name']),
+        'last_name' => htmlentities($_POST['last_name']),
+        'age' => htmlentities($_POST['age']),
+        'email' => htmlentities($_POST['email']),
+    ];
+
+    $user = new User();
+    $user->create($data);
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -55,7 +68,7 @@ include_once './User.php';
 
         <div class="card p-3">
             <h2 class="text-center h5 pb-3">Добавление нового пользователя</h2>
-            <form>
+            <form method="POST">
                 <div class="form-floating mb-3">
                     <input name="first_name" type="text" class="form-control" id="first_name" aria-describedby="Имя пользователя" placeholder="Иван" required>
                     <label for="first_name">Имя</label>

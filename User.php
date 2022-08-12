@@ -27,7 +27,17 @@ class User
 
     public function update(array $data, int $id): void
     {
-
+        try {
+            $statement = $this->connection->prepare("UPDATE `users` SET `email`=:email,`first_name`=:first_name,`last_name`=:last_name,`age`=:age WHERE `id` = :id");
+            $statement->bindValue('email', $data['email']);
+            $statement->bindValue('first_name', $data['first_name']);
+            $statement->bindValue('last_name', $data['last_name']);
+            $statement->bindValue('age', $data['age']);
+            $statement->bindValue('id', $id);
+            $statement->execute();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 
     public function delete(int $id): void

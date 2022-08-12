@@ -42,7 +42,14 @@ class User
 
     public function delete(int $id): void
     {
-
+        try {
+            $statement = $this->connection->prepare("DELETE FROM `users` WHERE `id` = :id");
+            $statement->bindValue('id', $id);
+            $statement->execute();
+            header('Location: /users-pdo/');
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 
     public function list(): array

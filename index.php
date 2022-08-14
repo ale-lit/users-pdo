@@ -67,7 +67,7 @@ if (isset($_GET['delete'])) {
                 </thead>
                 <tbody>
                     <?php 
-                        if (!empty($allUsers)) {
+                        if (! empty($allUsers)) {
                             foreach ($allUsers as $user) {
                                 $result = "<tr><form method='POST'>";
                                 $result .= "<th scope='row'><input name='id' class='form-control' type='number' placeholder='id' value='{$user['id']}' readonly='' required></th>";

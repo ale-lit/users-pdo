@@ -12,29 +12,22 @@ class User
     public function create(array $data): void
     {
         try {
-            $statement = $this->connection->prepare("INSERT INTO `users` (`id`, `email`, `first_name`, `last_name`, `age`, `date_created`) VALUES (NULL, :email, :first_name, :last_name, :age, :date '2022-08-11 23:51:13.000000')");
-            $statement->bindValue('email', $data['email']);
-            $statement->bindValue('first_name', $data['first_name']);
-            $statement->bindValue('last_name', $data['last_name']);
-            $statement->bindValue('age', $data['age']);
+            $statement = $this->connection->prepare("INSERT INTO `users` (`id`, `email`, `first_name`, `last_name`, `age`, `date_created`) VALUES (NULL, :email, :first_name, :last_name, :age, :date)");
+
             $dt = new DateTime();
-            $statement->bindValue('date', $dt->format('Y-m-d H:i:s'));
-            $statement->execute();
+            $data['date'] = $dt->format('Y-m-d H:i:s');
+            
+            $statement->execute($data);
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
     }
 
-    public function update(array $data, int $id): void
+    public function update(array $data): void
     {
         try {
             $statement = $this->connection->prepare("UPDATE `users` SET `email`=:email,`first_name`=:first_name,`last_name`=:last_name,`age`=:age WHERE `id` = :id");
-            $statement->bindValue('email', $data['email']);
-            $statement->bindValue('first_name', $data['first_name']);
-            $statement->bindValue('last_name', $data['last_name']);
-            $statement->bindValue('age', $data['age']);
-            $statement->bindValue('id', $id);
-            $statement->execute();
+            $statement->execute($data);
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
